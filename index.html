@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Srikar's Items for Sale</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+        }
+        main {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .item-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .item {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            text-align: center;
+        }
+        .item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .item h2 {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+        }
+        .item p {
+            color: #666;
+        }
+        .price {
+            font-weight: bold;
+            color: #e44d26;
+            font-size: 1.2rem;
+        }
+        .buy-button {
+            display: inline-block;
+            background-color: #25D366;
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+        .buy-button:hover {
+            background-color: #128C7E;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Srikar's Items for Sale</h1>
+    </header>
+    <main>
+        <div id="item-grid" class="item-grid">
+            <!-- Items will be dynamically inserted here -->
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Srikar Kalivarapu. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Product data in JSON format
+        const products = [
+            {
+                id: 1,
+                name: "Stylish Watch",
+                description: "Elegant timepiece with leather strap",
+                price: 99.99,
+                image: "/api/placeholder/300/200"
+            },
+            {
+                id: 2,
+                name: "Wireless Earbuds",
+                description: "High-quality sound with long battery life",
+                price: 79.99,
+                image: "/api/placeholder/300/200"
+            },
+            {
+                id: 3,
+                name: "Smartphone",
+                description: "Latest model with advanced features",
+                price: 499.99,
+                image: "/api/placeholder/300/200"
+            },
+            {
+                id: 4,
+                name: "Coffee Maker",
+                description: "Programmable with thermal carafe",
+                price: 129.99,
+                image: "/api/placeholder/300/200"
+            }
+        ];
+
+        // Function to create item HTML
+        function createItemHTML(product) {
+            return `
+                <div class="item">
+                    <img src="${product.image}" alt="${product.name}">
+                    <h2>${product.name}</h2>
+                    <p>${product.description}</p>
+                    <p class="price">$${product.price.toFixed(2)}</p>
+                    <button class="buy-button" onclick="contactSeller('${product.name}')">Buy</button>
+                </div>
+            `;
+        }
+
+        // Function to render all items
+        function renderItems() {
+            const itemGrid = document.getElementById('item-grid');
+            itemGrid.innerHTML = products.map(createItemHTML).join('');
+        }
+
+        // Function to handle "Buy" button click
+        function contactSeller(productName) {
+            const message = encodeURIComponent(`Hi Srikar, I'm interested in buying the ${productName} from your sale.`);
+            window.open(`https://wa.me/+17345966550?text=${message}`, '_blank');
+        }
+
+        // Render items when the page loads
+        window.onload = renderItems;
+    </script>
+</body>
+</html>
