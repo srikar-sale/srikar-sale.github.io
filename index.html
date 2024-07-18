@@ -34,11 +34,17 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             padding: 1rem;
             text-align: center;
+            position: relative;
         }
         .item img {
             max-width: 100%;
             height: auto;
             border-radius: 5px;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+        .item img:hover {
+            opacity: 0.8;
         }
         .item h2 {
             margin-top: 1rem;
@@ -49,8 +55,15 @@
         }
         .price {
             font-weight: bold;
-            color: #e44d26;
             font-size: 1.2rem;
+        }
+        .original-price {
+            color: #888;
+            text-decoration: line-through;
+            margin-right: 0.5rem;
+        }
+        .sale-price {
+            color: #e44d26;
         }
         .buy-button {
             display: inline-block;
@@ -73,6 +86,21 @@
             padding: 1rem;
             margin-top: 2rem;
         }
+        .sold-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -84,52 +112,110 @@
             <!-- Items will be dynamically inserted here -->
         </div>
     </main>
-    <footer>
-        <p>&copy; 2024 Srikar Kalivarapu. All rights reserved.</p>
-    </footer>
 
     <script>
         // Product data in JSON format
         const products = [
             {
                 id: 1,
-                name: "Stylish Watch",
-                description: "Elegant timepiece with leather strap",
-                price: 99.99,
-                image: "/api/placeholder/300/200"
+                name: "Air Fryer + Oven",
+                description: "DASH Deluxe Electric, Temperature Control, Non-stick Fry Basket, 6QT, 1700W",
+                originalPrice: 80.50,
+                salePrice: 35.00,
+                image: "/images/1.jpeg",
+                sold: false,
+                productPage: "https://www.amazon.com/Dash-DFAF455GBAQ01-Electric-Temperature-Control/dp/B07GNSHPBQ/ref=sr_1_4?crid=HDABF6N2SA35&dib=eyJ2IjoiMSJ9.LRz4y5JVqTJQSNjQr-jNStp2ji5wM9Fon4I__XKmlNZI2D9cKz1WwhIEVVGn5Psg_eXn1IGYTUbgt6QHCcoYWDq7q9hb-rTrxuXMLvxq6tO_3y0B7cBBEadzEFUeMJpHTVj5F68cF1d9C4wQi0kHfDXnIbmv92lAspRvpCvfMYMTtJ9OgnychJ-PGk2DmdxphNVOArXWIBMEKVg0me4Gt9th0Oysu4wlYFha33mQhWsNTFIC-g2taTch1CXGHMtTw1qsdzaiohq0fnxYx0YAqEPR-AMSYhJxRbTJyyI2doE.gFrSibxzCPhoPlLDQGk0SHiNGJ4OEjHz_H-CaF9PTxA&dib_tag=se&keywords=dash+airfryer&qid=1721170177&s=home-garden&sprefix=dash+airfryer%2Cgarden%2C164&sr=1-4"
             },
             {
                 id: 2,
-                name: "Wireless Earbuds",
-                description: "High-quality sound with long battery life",
-                price: 79.99,
-                image: "/api/placeholder/300/200"
+                name: "4 X Round Dinner Plates",
+                description: "10.3”, Stoneware",
+                originalPrice: 1.12,
+                salePrice: 0.5,
+                image: "/images/2.jpeg",
+                sold: false,
+                productPage: "https://www.walmart.com/ip/Mainstays-Glazed-White-Round-Stoneware-Dinner-Plate-10-3/701781993"
             },
             {
                 id: 3,
-                name: "Smartphone",
-                description: "Latest model with advanced features",
-                price: 499.99,
-                image: "/api/placeholder/300/200"
+                name: "Oscillation Pedestal Fan",
+                description: "Pelonis 16” 3-Speed Oscillating",
+                originalPrice: 30.5,
+                salePrice: 10,
+                image: "/images/3.jpeg",
+                sold: false,
+                productPage: "https://www.walmart.com/ip/Pelonis-16-3-Speed-Oscillating-Adjustable-Pedestal-Fan-FS40-19MB-New-Black/284466015?wmlspartner=wlpa&selectedSellerId=0"
             },
             {
                 id: 4,
-                name: "Coffee Maker",
-                description: "Programmable with thermal carafe",
-                price: 129.99,
-                image: "/api/placeholder/300/200"
+                name: "Smoothie Blender",
+                description: "Hamilton Beach, 48 oz. Jar",
+                originalPrice: 22,
+                salePrice: 10,
+                image: "/images/4.jpeg",
+                sold: false,
+                productPage: "https://www.walmart.com/ip/Hamilton-Beach-Smoothie-Blender-48-oz-Jar-12-Blending-Functions-Black-50180F/1370971228?athbdg=L1102&from=/search"
+            },
+            {
+                id: 5,
+                name: "CSCI 570 - Algorithms Book",
+                description: "Klienberg and Tardos, Shawn Shamsian's Class",
+                originalPrice: 30,
+                salePrice: 7.5,
+                image: "/images/5.jpeg",
+                sold: false,
+                productPage: "https://www.amazon.com/Algorithm-Design-Kleinberg-Jon/dp/9332518645/ref=tmm_pap_swatch_0?_encoding=UTF8&qid=&sr="
+            },
+            {
+                id: 6,
+                name: "Metal Clothing Racks",
+                description: "Single Rod Portable Garment Rack for Hanging clothes",
+                originalPrice: 19,
+                salePrice: 8,
+                image: "/images/6.jpeg",
+                sold: false,
+                productPage: "https://www.amazon.com/MOYIPIN-Clothing-Portable-Garment-43-31inch/dp/B0BFMJPYBF/ref=sr_1_2_sspa?crid=SR5U9UXQX7C4&dib=eyJ2IjoiMSJ9.bwSf5cU28X0FEtKqDrOoB9mR0mR5QXnNSYQAHQB3FoVuhtdeMWOFcIyOkpD22m15lMrJBJKpbG43yDEzTL8KMkKg_X-V_o4mNzmn7W83AhGUB2U1pdBH9DZPjgj1qQQhN_UmWol3g9C-21Uhp_gGKeUE3Kt7WoYVQUAIAabGl3sS2wBWhEMz5UQsU4lCTsCcPLFAfKNc5gy-jcHYxVBA4_RvkemS2_0QGDwkqi3cZNf9I477AnpxXBinT4dLomJkP8Jciaf2G-v4rCHPHQ_5YEbwev87MQjjcNsxSvVW4Z4.RM91nXyXM279DnODuwAZbeuGiQUt1b1wwIyzwYlEiXA&dib_tag=se&keywords=white%2Bclothes%2Brack&qid=1721171589&sprefix=white%2Bclothes%2Brack%2Caps%2C117&sr=8-2-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1"
+            },
+            {
+                id: 7,
+                name: "Carmona 10” mattress",
+                description: "Coil and Memory Foam",
+                originalPrice: 110,
+                salePrice: 50,
+                image: "/images/7.jpeg",
+                sold: false
+            },
+            {
+                id: 8,
+                name: "Shoe rack",
+                description: "3 Tier, Metal frame, cloth base",
+                originalPrice: 25,
+                salePrice: 10,
+                image: "/images/8.jpeg",
+                sold: false
             }
         ];
 
         // Function to create item HTML
         function createItemHTML(product) {
+            const priceHTML = product.originalPrice !== product.salePrice
+                ? `<p class="price">
+                     <span class="original-price">$${product.originalPrice.toFixed(2)}</span>
+                     <span class="sale-price">$${product.salePrice.toFixed(2)}</span>
+                   </p>`
+                : `<p class="price">$${product.salePrice.toFixed(2)}</p>`;
+
+            const imageHTML = product.productPage
+                ? `<a href="${product.productPage}" target="_blank"><img src="${product.image}" alt="${product.name}" title="Click for more details"></a>`
+                : `<img src="${product.image}" alt="${product.name}">`;
+
             return `
                 <div class="item">
-                    <img src="${product.image}" alt="${product.name}">
+                    ${imageHTML}
                     <h2>${product.name}</h2>
                     <p>${product.description}</p>
-                    <p class="price">$${product.price.toFixed(2)}</p>
-                    <button class="buy-button" onclick="contactSeller('${product.name}')">Buy</button>
+                    ${priceHTML}
+                    ${product.sold ? '<div class="sold-overlay">SOLD</div>' : `<button class="buy-button" onclick="contactSeller('${product.name}')">Buy</button>`}
                 </div>
             `;
         }
