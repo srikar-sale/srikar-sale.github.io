@@ -117,6 +117,34 @@
         // Product data in JSON format
         const products = [
             {
+                id: 9,
+                name: "Mat",
+                description: "Cloth mat for bathroom",
+                originalPrice: 12,
+                salePrice: 5,
+                image: "/images/9.jpeg",
+                sold: false
+            },
+            {
+                id: 7,
+                name: "Carmona 10” mattress",
+                description: "Coil and Memory Foam",
+                originalPrice: 110,
+                salePrice: 50,
+                image: "/images/7.jpeg",
+                sold: false
+            },
+            {
+                id: 5,
+                name: "CSCI 570 - Algorithms Book",
+                description: "Klienberg and Tardos, Shawn Shamsian's Class",
+                originalPrice: 30,
+                salePrice: 7.5,
+                image: "/images/5.jpeg",
+                sold: false,
+                productPage: "https://www.amazon.com/Algorithm-Design-Kleinberg-Jon/dp/9332518645/ref=tmm_pap_swatch_0?_encoding=UTF8&qid=&sr="
+            },
+            {
                 id: 1,
                 name: "Air Fryer + Oven",
                 description: "DASH Deluxe Electric, Temperature Control, Non-stick Fry Basket, 6QT, 1700W",
@@ -125,6 +153,16 @@
                 image: "/images/1.jpeg",
                 sold: true,
                 productPage: "https://www.amazon.com/Dash-DFAF455GBAQ01-Electric-Temperature-Control/dp/B07GNSHPBQ/ref=sr_1_4?crid=HDABF6N2SA35&dib=eyJ2IjoiMSJ9.LRz4y5JVqTJQSNjQr-jNStp2ji5wM9Fon4I__XKmlNZI2D9cKz1WwhIEVVGn5Psg_eXn1IGYTUbgt6QHCcoYWDq7q9hb-rTrxuXMLvxq6tO_3y0B7cBBEadzEFUeMJpHTVj5F68cF1d9C4wQi0kHfDXnIbmv92lAspRvpCvfMYMTtJ9OgnychJ-PGk2DmdxphNVOArXWIBMEKVg0me4Gt9th0Oysu4wlYFha33mQhWsNTFIC-g2taTch1CXGHMtTw1qsdzaiohq0fnxYx0YAqEPR-AMSYhJxRbTJyyI2doE.gFrSibxzCPhoPlLDQGk0SHiNGJ4OEjHz_H-CaF9PTxA&dib_tag=se&keywords=dash+airfryer&qid=1721170177&s=home-garden&sprefix=dash+airfryer%2Cgarden%2C164&sr=1-4"
+            },
+            {
+                id: 6,
+                name: "Metal Coat Rack",
+                description: "Single Rod Portable Garment Rack for Hanging clothes",
+                originalPrice: 19,
+                salePrice: 8,
+                image: "/images/6.jpeg",
+                sold: false,
+                productPage: "https://www.amazon.com/MOYIPIN-Clothing-Portable-Garment-43-31inch/dp/B0BFMJPYBF/ref=sr_1_2_sspa?crid=SR5U9UXQX7C4&dib=eyJ2IjoiMSJ9.bwSf5cU28X0FEtKqDrOoB9mR0mR5QXnNSYQAHQB3FoVuhtdeMWOFcIyOkpD22m15lMrJBJKpbG43yDEzTL8KMkKg_X-V_o4mNzmn7W83AhGUB2U1pdBH9DZPjgj1qQQhN_UmWol3g9C-21Uhp_gGKeUE3Kt7WoYVQUAIAabGl3sS2wBWhEMz5UQsU4lCTsCcPLFAfKNc5gy-jcHYxVBA4_RvkemS2_0QGDwkqi3cZNf9I477AnpxXBinT4dLomJkP8Jciaf2G-v4rCHPHQ_5YEbwev87MQjjcNsxSvVW4Z4.RM91nXyXM279DnODuwAZbeuGiQUt1b1wwIyzwYlEiXA&dib_tag=se&keywords=white%2Bclothes%2Brack&qid=1721171589&sprefix=white%2Bclothes%2Brack%2Caps%2C117&sr=8-2-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1"
             },
             {
                 id: 2,
@@ -157,35 +195,6 @@
                 productPage: "https://www.walmart.com/ip/Hamilton-Beach-Smoothie-Blender-48-oz-Jar-12-Blending-Functions-Black-50180F/1370971228?athbdg=L1102&from=/search"
             },
             {
-                id: 5,
-                name: "CSCI 570 - Algorithms Book",
-                description: "Klienberg and Tardos, Shawn Shamsian's Class",
-                originalPrice: 30,
-                salePrice: 7.5,
-                image: "/images/5.jpeg",
-                sold: false,
-                productPage: "https://www.amazon.com/Algorithm-Design-Kleinberg-Jon/dp/9332518645/ref=tmm_pap_swatch_0?_encoding=UTF8&qid=&sr="
-            },
-            {
-                id: 6,
-                name: "Metal Coat Rack",
-                description: "Single Rod Portable Garment Rack for Hanging clothes",
-                originalPrice: 19,
-                salePrice: 8,
-                image: "/images/6.jpeg",
-                sold: false,
-                productPage: "https://www.amazon.com/MOYIPIN-Clothing-Portable-Garment-43-31inch/dp/B0BFMJPYBF/ref=sr_1_2_sspa?crid=SR5U9UXQX7C4&dib=eyJ2IjoiMSJ9.bwSf5cU28X0FEtKqDrOoB9mR0mR5QXnNSYQAHQB3FoVuhtdeMWOFcIyOkpD22m15lMrJBJKpbG43yDEzTL8KMkKg_X-V_o4mNzmn7W83AhGUB2U1pdBH9DZPjgj1qQQhN_UmWol3g9C-21Uhp_gGKeUE3Kt7WoYVQUAIAabGl3sS2wBWhEMz5UQsU4lCTsCcPLFAfKNc5gy-jcHYxVBA4_RvkemS2_0QGDwkqi3cZNf9I477AnpxXBinT4dLomJkP8Jciaf2G-v4rCHPHQ_5YEbwev87MQjjcNsxSvVW4Z4.RM91nXyXM279DnODuwAZbeuGiQUt1b1wwIyzwYlEiXA&dib_tag=se&keywords=white%2Bclothes%2Brack&qid=1721171589&sprefix=white%2Bclothes%2Brack%2Caps%2C117&sr=8-2-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1"
-            },
-            {
-                id: 7,
-                name: "Carmona 10” mattress",
-                description: "Coil and Memory Foam",
-                originalPrice: 110,
-                salePrice: 50,
-                image: "/images/7.jpeg",
-                sold: false
-            },
-            {
                 id: 8,
                 name: "Shoe rack",
                 description: "5 Tier, Metal frame, cloth base",
@@ -193,16 +202,8 @@
                 salePrice: 10,
                 image: "/images/8.jpeg",
                 sold: true
-            },
-            {
-                id: 9,
-                name: "Mat",
-                description: "Cloth mat for bathroom",
-                originalPrice: 12,
-                salePrice: 5,
-                image: "/images/9.jpeg",
-                sold: false
             }
+            
         ];
 
         // Function to create item HTML
